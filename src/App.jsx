@@ -1,5 +1,5 @@
 import './App.css';
-import { useReducer, useRef } from 'react';
+import { useReducer, useRef, createContext, useContext, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import New from './pages/New';
@@ -14,20 +14,28 @@ import Button from './components/Button';
 const mockData = [
   {
     id: 1,
-    createdDate: new Date().getTime(),
+    createdDate: new Date("2025-08-17").getTime(),
     emotionId: 1,
     content: "1번 일기 내용"
   },
   {
     id: 2,
-    createdDate: new Date().getTime(),
+    createdDate: new Date("2025-07-05").getTime(),
     emotionId: 2,
     content: "2번 일기 내용"
+  },
+  {
+    id: 3,
+    createdDate: new Date("2024-12-05").getTime(),
+    emotionId: 4,
+    content: "3번 일기 내용"
   }
 ]
 
 function reducer(state, action) {
   switch (action.type) {
+    case "InIT":
+      return action.data
     case "CREATE":
       return [action.data, ...state]
     case "UPDATE":
@@ -46,10 +54,19 @@ function reducer(state, action) {
 
 }
 
-function App() {
+export const DiaryStateContext = createContext()
+export const DiaryDispatchContext = createContext()
 
+function App() {
   const [data, dispatch] = useReducer(reducer, mockData)
   const idRef = useRef(3)
+
+  useEffect(() => {
+    dispatch({
+      type: "INIT",
+      data: mockData
+    })
+  }, [])
 
   const onCreate = (createdDate, emotionId, content) => {
 
@@ -84,32 +101,17 @@ function App() {
   }
 
   return (
-    <div>
-      <Header
-        leftchild={<Button text="left" />}
-        title="header title"
-        rightchild={<Button text="right" />}
-      />
-
-      <button onClick={() =>
-        onCreate(new Date().getTime(), 1, "hello"
-        )}>일기 추가하기</button>
-
-      <button onClick={() =>
-        onUpdate(1, new Date().getTime(), 3, "수정된 내용"
-        )}>일기 수정하기</button>
-
-      <button onClick={() =>
-        onDelete(1)}>일기 삭제하기</button>
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/new" element={<New />} />
-        <Route path="/edit/" element={<Edit />} />
-        <Route path="/diary" element={<Diary />} />
-        <Route path='*' element={<Notfound />} />
-      </Routes>
-    </div>
+    <DiaryStateContext.Provider value={data}>
+      <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/new" element={<New />} />
+          <Route path="/edit/" element={<Edit />} />
+          <Route path="/diary" element={<Diary />} />
+          <Route path='*' element={<Notfound />} />
+        </Routes>
+      </DiaryDispatchContext.Provider>
+    </DiaryStateContext.Provider>
   )
 }
 
