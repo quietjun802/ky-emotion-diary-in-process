@@ -1,21 +1,32 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Button from '../components/Button'
 import Viewer from '../components/Viewer'
-
+import useDiary from '../hook/useDiary'
+import { getStringDate } from '../util/getStringDate'
 const Diary = () => {
-  const {id}=useParams()
+  const params = useParams()
   const nav = useNavigate()
+  const curDiaryItem = useDiary(params.id)
   
+  if (!curDiaryItem) {
+    return <div>데이터 로딩중...!</div>
+  }
+  const { createdDate, emotionId, content } = curDiaryItem
+  const title = getStringDate(new Date(createdDate))
   return (
     <div>
       <Header
-        title={"yyyy-mm-dd기록"}
-        leftchild={<Button text={"<뒤로가기"}/>}
-        rightchild={<Button text={"수정하기"}/>}
+        leftchild={<Button
+          onClick={() => nav(-1)}
+          text={"< 뒤로 가기"} />}
+        title={title}
+        rightchild={<Button
+          onClick={() => nav(`/edit/${id}`)}
+          text={"수정하기"} />}
       />
-       <Viewer/>
+      <Viewer emotionId={emotionId} content={content} />
     </div>
   )
 }

@@ -3,8 +3,9 @@ import "./Editor.css"
 import Button from './Button'
 import EmotionItem from './EmotionItem'
 import { useNavigate } from 'react-router-dom'
-import { getStringedDate } from "../util/getStringedData";
-import { emotionList } from "../util/constants";
+import { emotionList } from '../util/constants'
+import { getStringDate } from '../util/getStringDate'
+
 
 const Editor = ({ onSubmit,initData }) => {
     // const emotionId = 4
@@ -54,6 +55,7 @@ const Editor = ({ onSubmit,initData }) => {
                     name='createdDate'
                     onChange={onChangeInput}
                     type="date"
+                    value={getStringDate(input.createdDate)}
                 />
             </section>
             <section className="emotion-section">
