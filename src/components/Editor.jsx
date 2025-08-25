@@ -1,9 +1,9 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState,useEffect } from 'react'
 import "./Editor.css"
 import Button from './Button'
 import EmotionItem from './EmotionItem'
 import { useNavigate } from 'react-router-dom'
-import { emotionList } from '../util/constants'
+import {emotionList} from '../util/constants'
 import { getStringDate } from '../util/getStringDate'
 
 
@@ -29,6 +29,7 @@ const Editor = ({ onSubmit,initData }) => {
         }
 
     },[initData])
+
 
     const onChangeInput = (e) => {
         let name = e.target.name;
@@ -80,17 +81,19 @@ const Editor = ({ onSubmit,initData }) => {
             </section>
             <section className="content-section">
                 <h4>오늘의 일기</h4>
-                <textarea 
-                name="content"
-                value={input.content}
-                onChange={onChangeInput}
-                placeholder='오늘은 어땠나요?'></textarea>
+                <textarea
+                    name="content"
+                    value={input.content}
+                    onChange={onChangeInput}
+                    placeholder='오늘은 어땠나요?'>
+
+                </textarea>
             </section>
             <section className="button-section">
-                <Button text={"취소하기"} onClick={()=>nav(-1)}/>
-                <Button text={"작성완료"} 
-                onClick={onSubmitButtonClick}
-                type={'POSITIVE'} />
+                <Button text={"취소하기"} onClick={() => nav(-1)} />
+                <Button text={"작성완료"}
+                    onClick={onSubmitButtonClick}
+                    type={'POSITIVE'} />
             </section>
         </div>
     )

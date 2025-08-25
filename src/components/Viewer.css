@@ -1,23 +1,26 @@
-.Viewer >section {
-    display: flex;
-    flex-direction: column;
+.Viewer>section {
+
     text-align: center;
-    align-items: center;
-    margin-bottom: 100px;
-    padding-top: 100px;
+    margin-bottom: 50px;
 }
-.Viewer >section h4{
+
+.Viewer>section h4 {
     font-size: 22px;
+    padding: 10px 0;
 
 }
 
-.emotion-img-wrapper{
+.emotion-img-wrapper {
     width: 250px;
     height: 250px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    color: #fff;
+    font-size: 25px;
+    border-radius: 10px;
 
 }
 
@@ -39,4 +42,16 @@
 
 .emotion-img-wrapper.img-5 {
     background-color: rgb(253, 86, 95);
+}
+
+.content-section {
+    background-color: #fafafa;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.content-section p{
+    min-height: 100px;
+    padding: 20px;
+    font-size: 20px;
 }
